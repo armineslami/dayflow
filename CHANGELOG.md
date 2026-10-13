@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.7.4] - 2026-10-14
+
+Released in this version: `@dayflow/core`, `@dayflow/react`, `@dayflow/vue`, `@dayflow/svelte` and `@dayflow/angular` 3.7.4 · `@dayflow/plugin-sidebar` 1.6.4. All other packages are unchanged.
+
+### New Features & Enhancements
+
+- **Rich Event Notes (`@dayflow/core`)**: Notes in the default event detail panel and dialog now show as formatted text with clickable links, including HTML notes from providers such as Outlook. An edit button switches to a plain-text editor; saving an edited HTML note stores it as plain text.
+- **Meeting Links Detected in Notes (`@dayflow/core`)**: Events without a `conference` now show the "Join" button when their notes contain a Google Meet, Zoom, Teams, Webex, Whereby or Jitsi link. This also applies to ICS imports, and is available as `extractConferenceFromDescription`.
+
+### Fixed
+
+- **Month View (`@dayflow/core`)**: Clicking a day from the previous or next month now selects it, and selecting a date that is already visible no longer scrolls the view.
+- **Event Detail Panel (`@dayflow/core`)**: The panel stays inside the viewport when its content is tall.
+- **Sidebar with No Calendars (`@dayflow/plugin-sidebar`)**: The mini calendar keeps its position when the calendar list is empty.
+
 ## [3.7.3] - 2026-09-19
 
 Released in this version: `@dayflow/core`, `@dayflow/react`, `@dayflow/vue`, `@dayflow/svelte` and `@dayflow/angular` 3.7.3 · `@dayflow/plugin-drag` 1.6.2 · `@dayflow/plugin-sidebar` 1.6.3 · `@dayflow/ui-context-menu` 1.2.1 · `@dayflow/sync-core` 1.1.2. All other packages are unchanged.
