@@ -687,9 +687,11 @@ describe('WeekComponent', () => {
       />
     );
 
-    const aug31Cell = container.querySelector('[data-date="2026-08-31"]');
+    const aug31Cell = container.querySelector<HTMLElement>(
+      '[data-date="2026-08-31"]'
+    );
     expect(aug31Cell).not.toBeNull();
-    expect(aug31Cell.dataset.otherMonth).toBe('true');
+    expect(aug31Cell?.dataset.otherMonth).toBe('true');
 
     fireEvent.click(aug31Cell!);
 
@@ -751,9 +753,11 @@ describe('WeekComponent', () => {
       />
     );
 
-    const aug31Cell = container.querySelector('[data-date="2026-08-31"]');
+    const aug31Cell = container.querySelector<HTMLElement>(
+      '[data-date="2026-08-31"]'
+    );
     expect(aug31Cell).not.toBeNull();
-    expect(aug31Cell.dataset.otherMonth).toBe('true');
+    expect(aug31Cell?.dataset.otherMonth).toBe('true');
 
     fireEvent.click(aug31Cell!);
 
