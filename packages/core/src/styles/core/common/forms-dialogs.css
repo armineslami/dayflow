@@ -416,6 +416,99 @@
     margin-bottom: 1rem;
   }
 
+  .df-event-notes-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .df-event-notes-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    min-height: 2rem;
+  }
+
+  .df-event-notes-frame {
+    width: 100%;
+    min-height: 3rem;
+    overflow: hidden;
+  }
+
+  .df-event-notes-frame:focus-within {
+    overflow: visible;
+  }
+
+  .df-event-notes-frame > .df-form-textarea,
+  .df-event-notes-frame > .df-event-notes-preview {
+    display: block;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .df-event-notes-frame > .df-form-textarea:focus {
+    outline: none;
+    border-color: var(--df-color-ring);
+    box-shadow:
+      0 0 0 0px var(--df-color-background),
+      0 0 0 2px var(--df-color-ring);
+  }
+
+  .df-event-notes-preview {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid var(--df-color-border);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--df-color-card);
+    color: var(--df-color-foreground);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+  }
+
+  .df-event-notes-preview a {
+    color: var(--df-color-primary);
+    text-decoration: underline;
+  }
+
+  .df-event-notes-preview ul,
+  .df-event-notes-preview ol {
+    margin: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+
+  .df-event-notes-preview ul {
+    list-style: disc;
+  }
+  .df-event-notes-preview ol {
+    list-style: decimal;
+  }
+  .df-event-notes-preview li {
+    margin: 0.25rem 0;
+  }
+  .df-event-notes-preview p {
+    margin: 0.5rem 0;
+  }
+  .df-event-notes-heading {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+  .df-event-notes-preview hr {
+    border: 0;
+    border-top: 1px solid var(--df-color-border);
+    margin: 0.75rem 0;
+  }
+
+  .df-event-notes-gap {
+    height: 0.75rem;
+  }
+
   .df-event-dialog-time-row {
     margin-bottom: 1rem;
   }
@@ -540,6 +633,11 @@
     color: var(--df-color-primary);
     font-size: 0.8125rem;
     font-weight: 500;
+  }
+
+  .df-event-notes-action.df-event-conference-done {
+    height: 2rem;
+    min-height: 2rem;
   }
 
   .df-event-conference-join {
@@ -704,6 +802,11 @@
 
   .df-event-detail-panel {
     position: fixed;
+    box-sizing: border-box;
+    width: min(calc(28rem + 30px), calc(100vw - 16px));
+    max-width: min(calc(28rem + 30px), calc(100vw - 16px));
+    max-height: calc(100dvh - 16px);
+    overflow: hidden;
     border-width: 1px;
     border-style: solid;
     border-radius: 0.5rem;
@@ -712,18 +815,28 @@
       0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 
+  .df-event-detail-panel .df-form-textarea,
+  .df-dialog-container .df-form-textarea {
+    box-sizing: border-box;
+    resize: vertical;
+    overflow-y: auto;
+  }
+
   /* ===================================================================
    * Dialog container (centered modal content box)
    * =================================================================== */
 
   .df-dialog-container {
     position: relative;
+    box-sizing: border-box;
+    max-height: calc(100dvh - 16px);
+    overflow: hidden;
     border-width: 1px;
     border-style: solid;
     border-radius: 0.5rem;
     padding: 1.5rem;
-    max-width: 28rem;
-    width: 100%;
+    max-width: calc(28rem + 30px);
+    width: min(calc(28rem + 30px), calc(100vw - 32px));
     margin-inline: 1rem;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   }

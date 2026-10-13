@@ -147,19 +147,40 @@ export const createEventConference = (
   };
 };
 
+/** Find a recognized meeting link in event notes while preserving the notes. */
+export const extractConferenceFromDescription = (
+  description?: string
+): EventConference | undefined =>
+  description
+    ?.match(/https?:\/\/[^\s<>]+/gi)
+    ?.map(candidate =>
+      createEventConference(
+        candidate
+          .split(String.fromCodePoint(34))[0]
+          .split(String.fromCodePoint(39))[0]
+          .replace(/[),.;!?]+$/, '')
+      )
+    )
+    .find(
+      candidate =>
+        candidate && detectMeetingProvider(candidate.joinUrl).id !== 'custom'
+    ) ?? undefined;
+
 /**
  * Read canonical conference data, with compatibility for the older
  * meta.meetingUrl convention documented by DayFlow.
  */
 export const getEventConference = (
-  event: Pick<Event, 'conference' | 'meta'>
+  event: Pick<Event, 'conference' | 'meta' | 'description'>
 ): EventConference | undefined => {
   if (event.conference?.joinUrl) return event.conference;
 
   const legacyUrl = event.meta?.meetingUrl;
-  return typeof legacyUrl === 'string'
-    ? (createEventConference(legacyUrl) ?? undefined)
-    : undefined;
+  return (
+    (typeof legacyUrl === 'string'
+      ? (createEventConference(legacyUrl) ?? undefined)
+      : undefined) ?? extractConferenceFromDescription(event.description)
+  );
 };
 
 /** Set canonical conference data and remove a legacy meta.meetingUrl value. */
