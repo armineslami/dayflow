@@ -73,4 +73,16 @@ describe('meetingUtils', () => {
       meta: { source: 'import' },
     });
   });
+
+  it('shows a meeting link from notes on an existing event', () => {
+    expect(
+      getEventConference({
+        description:
+          'Microsoft Teams meeting\nJoin:\nhttps://teams.microsoft.com/meet/436605223744481?p=abc\nAgenda',
+      })
+    ).toMatchObject({
+      provider: 'microsoft-teams',
+      joinUrl: 'https://teams.microsoft.com/meet/436605223744481?p=abc',
+    });
+  });
 });

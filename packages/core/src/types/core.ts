@@ -27,6 +27,7 @@ export enum ViewType {
   YEAR = 'year',
   AGENDA = 'agenda',
   RESOURCE = 'resource',
+  GANTT = 'gantt',
 }
 
 export type CalendarViewType = ViewType | string;

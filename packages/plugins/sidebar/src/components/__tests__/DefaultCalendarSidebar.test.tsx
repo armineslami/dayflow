@@ -281,4 +281,42 @@ describe('DefaultCalendarSidebar group actions', () => {
     expect(deleteCalendar).toHaveBeenNthCalledWith(1, 'work');
     expect(deleteCalendar).toHaveBeenNthCalledWith(2, 'personal');
   });
+
+  it('renders df-sidebar-list-shell even when calendars list is empty', () => {
+    const app = {
+      state: { overrides: [], currentView: 'month' },
+      canMutateFromUI: vi.fn(() => true),
+      getReadOnlyConfig: vi.fn(() => ({})),
+      getVisibleMonth: vi.fn(() => new Date(2026, 8, 1)),
+      getCurrentDate: vi.fn(() => new Date(2026, 8, 22)),
+      getEvents: vi.fn(() => []),
+      getCalendarRegistry: vi.fn(() => ({
+        getCalendar: vi.fn(),
+      })),
+      getViewConfig: vi.fn(() => ({})),
+      updateCalendar: vi.fn(),
+      deleteCalendar: vi.fn(() => Promise.resolve()),
+    } as unknown as ICalendarApp;
+
+    const { container } = render(
+      <LocaleProvider>
+        <DefaultCalendarSidebar
+          app={app}
+          calendars={[]}
+          toggleCalendarVisibility={vi.fn()}
+          toggleAll={vi.fn()}
+          isCollapsed={false}
+          setCollapsed={vi.fn()}
+          editingCalendarId={null}
+          setEditingCalendarId={vi.fn()}
+          componentsOrder={['calendarList', 'miniCalendar']}
+        />
+      </LocaleProvider>
+    );
+
+    const listShell = container.querySelector('.df-sidebar-list-shell');
+    expect(listShell).toBeTruthy();
+    const miniCalendar = container.querySelector('.df-sidebar-mini-calendar');
+    expect(miniCalendar).toBeTruthy();
+  });
 });

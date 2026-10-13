@@ -555,7 +555,7 @@ export const CalendarList = ({
   const hasGroups = groups.size > (groups.has(null) ? 1 : 0);
 
   if (!hasGroups && !groups.has(null)) {
-    return null;
+    return <div className='df-sidebar-list-shell' />;
   }
 
   if (!hasGroups) {

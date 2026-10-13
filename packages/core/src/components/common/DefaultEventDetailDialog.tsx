@@ -18,6 +18,7 @@ import {
 
 import { CalendarPicker, CalendarOption } from './CalendarPicker';
 import { EventConferenceField } from './EventConferenceField';
+import { EventNotesField } from './EventNotesField';
 import { EventRepeatEditor } from './EventRepeatEditor';
 import { LoadingButton } from './LoadingButton';
 
@@ -303,25 +304,17 @@ const DefaultEventDetailDialog = ({
           />
 
           {shouldShowNotes && (
-            <div className='df-event-dialog-notes-row'>
-              <span className='df-form-label'>{t('note')}</span>
-              <textarea
-                id={`event-dialog-note-${editedEvent.id}`}
-                name='note'
-                value={editedEvent.description ?? ''}
-                readOnly={!isEditable || isPending}
-                disabled={!isEditable || isPending}
-                onChange={e =>
-                  setEditedEvent({
-                    ...editedEvent,
-                    description: (e.target as HTMLTextAreaElement).value,
-                  })
-                }
-                rows={4}
-                className='df-form-textarea'
-                placeholder={t('addNotePlaceholder')}
-              />
-            </div>
+            <EventNotesField
+              key={editedEvent.id}
+              id={`event-dialog-note-${editedEvent.id}`}
+              value={editedEvent.description ?? ''}
+              editable={isEditable}
+              disabled={isPending}
+              rows={4}
+              onChange={description =>
+                setEditedEvent({ ...editedEvent, description })
+              }
+            />
           )}
 
           {isEditable && (

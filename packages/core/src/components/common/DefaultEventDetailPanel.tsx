@@ -34,6 +34,7 @@ import {
 
 import { CalendarOption, CalendarPicker } from './CalendarPicker';
 import { EventConferenceField } from './EventConferenceField';
+import { EventNotesField } from './EventNotesField';
 import { EventRepeatEditor } from './EventRepeatEditor';
 import { LoadingButton } from './LoadingButton';
 
@@ -73,6 +74,28 @@ const DefaultEventDetailPanel = ({
   const committedEventRef = useRef(event);
   const draftEventRef = useRef(event);
   const skipCommitRef = useRef(false);
+  const [panelTop, setPanelTop] = useState(position.top);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    const fitInViewport = () => {
+      setPanelTop(
+        Math.max(
+          8,
+          Math.min(position.top, window.innerHeight - panel.offsetHeight - 8)
+        )
+      );
+    };
+    const observer = new ResizeObserver(fitInViewport);
+    observer.observe(panel);
+    window.addEventListener('resize', fitInViewport);
+    fitInViewport();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', fitInViewport);
+    };
+  }, [panelRef, position.top]);
 
   const commitDraftChanges = useCallback(() => {
     if (skipCommitRef.current) return;
@@ -403,7 +426,7 @@ const DefaultEventDetailPanel = ({
       data-event-detail-panel='true'
       data-event-id={event.id}
       style={{
-        top: `${position.top}px`,
+        top: `${panelTop}px`,
         left: `${position.left}px`,
         zIndex: 9999,
         pointerEvents: 'auto',
@@ -513,34 +536,17 @@ const DefaultEventDetailPanel = ({
       />
 
       {shouldShowNotes && (
-        <div
-          className='df-event-dialog-notes-row'
-          style={{ marginBottom: '0.75rem' }}
-        >
-          <span className='df-form-label'>{t('note')}</span>
-          <textarea
-            id={`event-note-${draftEvent.id}`}
-            name='note'
-            value={draftEvent.description ?? ''}
-            readOnly={!isEditable || isLoading}
-            disabled={!isEditable || isLoading}
-            onChange={e =>
-              applyDraftEventUpdate({
-                ...draftEvent,
-                description: (e.target as HTMLTextAreaElement).value,
-              })
-            }
-            onInput={e =>
-              applyDraftEventUpdate({
-                ...draftEvent,
-                description: (e.target as HTMLTextAreaElement).value,
-              })
-            }
-            rows={3}
-            className='df-form-textarea'
-            placeholder={t('addNotePlaceholder')}
-          />
-        </div>
+        <EventNotesField
+          key={draftEvent.id}
+          id={`event-note-${draftEvent.id}`}
+          value={draftEvent.description ?? ''}
+          editable={isEditable}
+          disabled={isLoading}
+          rows={3}
+          onChange={description =>
+            applyDraftEventUpdate({ ...draftEvent, description })
+          }
+        />
       )}
 
       {isEditable && (
