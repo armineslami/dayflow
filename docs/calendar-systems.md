@@ -5,6 +5,12 @@ default. Calendar selection is independent of language, timezone, and the first
 weekday: an application can display Jalali dates with English labels, or
 Gregorian dates with Persian labels.
 Jalali display dates omit the redundant era label (such as `AP` in English).
+Gregorian mode preserves the supplied locale verbatim, including its default or
+explicit calendar preference, for backward compatibility. Only Jalali mode adds
+the Persian calendar override; other locale preferences, such as numbering,
+remain intact. Pass an explicit Gregorian locale (for example,
+`fa-IR-u-ca-gregory`) when Gregorian labels are desired for a locale whose default
+calendar is not Gregorian.
 
 ```tsx
 import {

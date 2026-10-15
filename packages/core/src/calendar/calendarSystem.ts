@@ -84,10 +84,12 @@ export function addCalendarMonths(
   return result;
 }
 
-/** Preserve language/numbering preferences while choosing the display calendar. */
+/** Preserve existing locale behavior unless Jalali explicitly overrides it. */
 export function calendarLocale(locale: string, system: CalendarSystem): string {
+  if (system === 'gregorian') return locale;
+
   return new Intl.Locale(locale, {
-    calendar: system === 'jalali' ? 'persian' : 'gregory',
+    calendar: 'persian',
   }).toString();
 }
 
