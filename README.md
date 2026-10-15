@@ -1,5 +1,12 @@
 # DayFlow
 
+> **About this fork:** This fork of [dayflow-js/calendar](https://github.com/dayflow-js/calendar)
+> adds Jalali (Persian) calendar support and Persian UI localization. The work lives
+> on [`feat/jalali-calendar`](https://github.com/armineslami/dayflow/tree/feat/jalali-calendar)
+> and is intended for contribution upstream. Gregorian remains the default, and
+> event dates and recurrence rules retain their ISO/Gregorian semantics.
+> These additions are not included in the official npm packages yet.
+
 **English** | [中文](README.zh.md) | [日本語](README.ja.md) | [Getting Started & Contributing](CONTRIBUTING.md)
 
 A flexible and feature-rich calendar component library for **React, Vue, Angular, and Svelte** with drag-and-drop support, multiple views, and plugin architecture.
